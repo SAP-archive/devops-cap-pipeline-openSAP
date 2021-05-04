@@ -1,0 +1,27 @@
+### General project setup
+general:
+  gitSshKeyCredentialsId: 'githubCredentialsId'
+  productiveBranch: 'main'
+  buildTool: 'mta'
+
+### Step-specific configuration
+steps:
+  uiVeri5ExecuteTests:
+    runOptions: ["--seleniumAddress=http://selenium:4444/wd/hub", "./app/admin/webapp/test/uiveri5/conf.js"]
+
+  cloudFoundryDeploy:
+    cloudFoundry:
+      credentialsId: 'cfCredentialsId'
+      org: '<YOUR_ORG>'
+      space: '<YOUR_SPACE>'
+
+### Stage-specific configuration
+stages:
+  'Central Build':
+    buildExecute : true
+
+  'Confirm':
+    manualConfirmation: false
+
+  'Release':
+    cloudFoundryDeploy: false

@@ -1,0 +1,89 @@
+_schema-version: '3.1'
+ID: sap.capire-bookshop
+version: 1.0.0
+description: "A simple bookshop application"
+parameters:
+  enable-parallel-deployments: true
+   
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm install --production
+        - npx -p @sap/cds-dk cds build --production
+
+modules:
+  # --------------------- SERVER MODULE ------------------------
+  - name: capire-bookshop-srv
+  # ------------------------------------------------------------
+    type: nodejs
+    path: gen/srv
+    parameters:
+      memory: 512M
+      disk-quota: 512M
+    requires:
+      - name: capire-bookshop-db
+      - name: capire-bookshop-uaa
+    provides:
+      - name: srv_api     # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+
+  # -------------------- SIDECAR MODULE ------------------------
+  - name: capire-bookshop-db-deployer
+  # ------------------------------------------------------------
+    type: hdb
+    path: gen/db  
+    parameters:
+      buildpack: nodejs_buildpack
+      memory: 256M
+      disk-quota: 256M
+    requires:
+      # 'hana' and 'xsuaa' resources extracted from CAP configuration
+      - name: capire-bookshop-db
+
+  # --------------------- APPROUTER MODULE ---------------------
+  - name: capire-bookshop-approuter
+  # ------------------------------------------------------------
+    type: nodejs
+    path: app
+    parameters:
+      memory: 512M
+      disk-quota: 512M
+    requires:
+      - name: capire-bookshop-uaa
+      - name: capire-bookshop-dest
+      - name: srv_api
+        group: destinations
+        properties:
+          forwardAuthToken: true
+          name: srv_api
+          url: ~{srv-url}
+
+resources:
+  # ------------------------------------------------------------
+  - name: capire-bookshop-db
+  # ------------------------------------------------------------
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana  # or 'hanatrial' on trial landscapes
+      service-plan: hdi-shared
+    properties:
+      hdi-container-name: ${service-name}
+
+  # ------------------------------------------------------------
+  - name: capire-bookshop-uaa
+  # ------------------------------------------------------------
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+
+  # --------------------- DESTINATION SERVICE ----------------------
+  - name: capire-bookshop-dest
+  # ----------------------------------------------------------------
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
