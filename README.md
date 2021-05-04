@@ -66,6 +66,10 @@ In Jenkins, create new credentials `cfCredentialsId` (Cloud Foundry user credent
 
 In `.pipeline/config.yaml`, fill the placeholders `<YOUR_ORG>` and `<YOUR_SPACE>` to configure your Cloud Foundry deployment target.
 
+## Known Issues
+
+Please look into GitHub issues for any issues reported.
+
 ## How to obtain support
 
 [Create an issue](https://github.com/SAP-samples/<repository-name>/issues) in this repository if you find a bug.
