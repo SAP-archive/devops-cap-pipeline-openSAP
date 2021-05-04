@@ -1,5 +1,7 @@
 # openSAP "Efficient DevOps with SAP" sample - Project "Piper" pipeline
 
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/devops-cap-pipeline-openSAP)](https://api.reuse.software/info/github.com/SAP-samples/devops-cap-pipeline-openSAP)
+
 Find here the sample for the openSAP course [Efficient DevOps with SAP](https://open.sap.com/courses/devops1), week 3, unit 4 'Demo of Delivery/Deployment Stages of Project "Piper" Pipelines'.
 
 In this unit it is shown how to set up the Project "Piper" general purpose pipeline for an multi-target application (MTA) that follows SAP's Cloud Application Programming (CAP) model. Furthermore, the following configurations are performed for the pipeline:
