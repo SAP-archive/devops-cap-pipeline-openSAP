@@ -1,6 +1,8 @@
 # openSAP "Efficient DevOps with SAP" sample - Project "Piper" pipeline
 
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/devops-cap-pipeline-openSAP)](https://api.reuse.software/info/github.com/SAP-samples/devops-cap-pipeline-openSAP)
+[![Not Maintained](https://img.shields.io/badge/Maintenance%20Level-Abandoned-orange.svg)](https://gist.github.com/cheerfulstoic/d107229326a01ff0f333a1d3476e068d)
+
 
 Find here the sample for the openSAP course [Efficient DevOps with SAP](https://open.sap.com/courses/devops1), week 3, unit 4 'Demo of Delivery/Deployment Stages of Project "Piper" Pipelines'.
 
